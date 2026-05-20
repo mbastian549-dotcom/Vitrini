@@ -1656,7 +1656,7 @@ body {
       </button>
       <div class="top-divider"></div>
       <div class="dropdown-wrap">
-        <div class="avatar" onclick="toggleDD('ddUser')">B</div>
+        <div class="avatar" id="userAvatar" onclick="toggleDD('ddUser')">?</div>
         <div class="dropdown" id="ddUser">
           <div class="dd-header">
             <div class="dd-name">Bastián</div>
@@ -1694,7 +1694,7 @@ body {
     <!-- HOME -->
     <div class="home-view" id="homeView">
       <div class="home-greeting">
-        <h1 class="home-title">Hola, Bastián.<br><em>¿Dónde buscamos hoy?</em></h1>
+        <h1 class="home-title" id="homeTitle">Hola.<br><em>¿Dónde buscamos hoy?</em></h1>
         <div class="home-sub">Encuentra negocios sin web · listos para comprar tus servicios</div>
       </div>
 
@@ -2222,6 +2222,63 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initAppSplash);
 } else {
   initAppSplash();
+}
+
+
+// ── Load user from Google OAuth token ─────────────────────
+(function loadUser() {
+  // Check token from sessionStorage (set by landing page after OAuth)
+  const token = sessionStorage.getItem('vitrini_token');
+  if (!token) {
+    // No token — show default, redirect to landing if needed
+    setUser('Usuario', '', 'U');
+    return;
+  }
+
+  // Fetch user info from Google
+  fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(r => r.json())
+  .then(data => {
+    const name    = data.name || data.given_name || 'Usuario';
+    const email   = data.email || '';
+    const picture = data.picture || '';
+    const initial = name.charAt(0).toUpperCase();
+    setUser(name, email, initial, picture);
+  })
+  .catch(() => {
+    setUser('Usuario', '', 'U');
+  });
+})();
+
+function setUser(name, email, initial, picture) {
+  // Avatar
+  const avatar = document.getElementById('userAvatar');
+  if (avatar) {
+    if (picture) {
+      avatar.innerHTML = '<img src="' + picture + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
+    } else {
+      avatar.textContent = initial;
+    }
+  }
+
+  // Dropdown
+  const nameEl  = document.getElementById('ddUserName');
+  const emailEl = document.getElementById('ddUserEmail');
+  if (nameEl)  nameEl.textContent  = name;
+  if (emailEl) emailEl.textContent = email;
+
+  // Greeting
+  const greeting = document.getElementById('homeTitle');
+  if (greeting && name && name !== 'Usuario') {
+    const firstName = name.split(' ')[0];
+    greeting.innerHTML = 'Hola, ' + firstName + '.<br><em>¿Dónde buscamos hoy?</em>';
+  }
+
+  // Sidebar recents label
+  const planName = document.querySelector('.plan-name');
+  if (planName) planName.textContent = 'Free';
 }
 
 </script>
