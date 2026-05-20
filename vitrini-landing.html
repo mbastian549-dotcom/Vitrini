@@ -1533,39 +1533,22 @@ function handleGoogle() {
     '&scope=' + SCOPE +
     '&prompt=select_account';
 
-  // Try popup first
-  const w = 500, h = 620;
-  const left = Math.round(window.screenX + (window.outerWidth - w) / 2);
-  const top  = Math.round(window.screenY + (window.outerHeight - h) / 2);
-  const popup = window.open(url, 'vitrini-google-auth',
-    'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
-    ',toolbar=no,menubar=no,resizable=no,scrollbars=yes');
-
-  if (!popup || popup.closed) {
-    // Popup blocked — redirect current page
-    window.location.href = url;
-    return;
-  }
-
-  // Poll popup for token
-  const timer = setInterval(() => {
-    try {
-      if (!popup || popup.closed) { clearInterval(timer); return; }
-      const hash = popup.location.hash;
-      if (hash && hash.includes('access_token')) {
-        clearInterval(timer);
-        popup.close();
-        const params = new URLSearchParams(hash.substring(1));
-        const token = params.get('access_token');
-        if (token) {
-          sessionStorage.setItem('vitrini_token', token);
-          closeLogin();
-          window.location.href = 'vitrini.html';
-        }
-      }
-    } catch(e) { /* cross-origin — keep polling */ }
-  }, 500);
+  // Redirect directly — no popup (popup gets blocked by browsers)
+  window.location.href = url;
 }
+
+// Handle OAuth token on page load (after Google redirects back)
+(function checkOAuthToken() {
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+    if (token) {
+      sessionStorage.setItem('vitrini_token', token);
+      window.location.href = 'vitrini.html';
+    }
+  }
+})();
 
 function showGoogleSetupNotice() {
   // Show a nice in-modal notice instead of an ugly alert
