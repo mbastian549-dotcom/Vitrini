@@ -1198,9 +1198,365 @@ body {
   .pricing-modal { padding: 2rem 1.2rem 1.5rem; }
 }
 
+
+/* ══ SECTION VIEWS ════════════════════════ */
+.section-view {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+.section-view.on { display: flex; }
+
+/* Shared section header */
+.sv-header {
+  padding: 1.2rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.sv-eyebrow {
+  font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 3px;
+}
+.sv-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.sv-sub {
+  font-size: 0.76rem;
+  color: var(--ink3);
+  margin-top: 2px;
+  letter-spacing: -0.01em;
+}
+.sv-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.2rem 1.5rem;
+  background: var(--bg);
+}
+
+/* Empty state */
+.sv-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 300px;
+  text-align: center;
+}
+.sv-empty-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.sv-empty-title { font-size: 0.92rem; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; }
+.sv-empty-sub { font-size: 0.76rem; color: var(--ink3); line-height: 1.55; max-width: 280px; letter-spacing: -0.01em; }
+.sv-empty-btn {
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s;
+  letter-spacing: -0.01em;
+}
+.sv-empty-btn:hover { background: var(--blue-hover); }
+
+/* KPI row */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow-sm);
+}
+.kpi-val {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.kpi-val.kv-blue { color: var(--blue); }
+.kpi-val.kv-green { color: #16a34a; }
+.kpi-val.kv-red { color: #dc2626; }
+.kpi-lbl { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.6rem; color: var(--ink4); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Chart bar (css-only) */
+.chart-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.chart-title { font-size: 0.8rem; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; margin-bottom: 1rem; }
+.chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 80px; }
+.chart-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.chart-bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--blue-mid); transition: height 0.4s ease; min-height: 4px; }
+.chart-bar.active { background: var(--blue); }
+.chart-lbl { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.55rem; color: var(--ink4); }
+
+/* CRM Kanban */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+  align-items: start;
+}
+.kanban-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.kanban-col-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kanban-col-name {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.kanban-col-count {
+  font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  font-size: 0.6rem;
+  background: var(--surface2);
+  color: var(--ink4);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+.kanban-cards { padding: 8px; display: flex; flex-direction: column; gap: 6px; min-height: 80px; }
+.kanban-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+.kanban-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+.kc-name { font-size: 0.78rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.kc-type { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.6rem; color: var(--ink4); margin-top: 2px; }
+.kc-badge { display: inline-block; font-size: 0.56rem; padding: 2px 6px; border-radius: 4px; margin-top: 6px; font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; }
+.kb-new    { background: #eff4ff; color: var(--blue); }
+.kb-contact{ background: #fef9c3; color: #92400e; }
+.kb-prop   { background: #f0fdf4; color: #166534; }
+.kb-close  { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+
+/* Plantillas */
+.tmpl-grid { display: flex; flex-direction: column; gap: 8px; }
+.tmpl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tmpl-card:hover { border-color: var(--blue-mid); box-shadow: 0 0 0 3px var(--blue-mid); }
+.tmpl-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--blue-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.tmpl-title { font-size: 0.84rem; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; }
+.tmpl-preview { font-size: 0.74rem; color: var(--ink3); line-height: 1.5; margin-top: 2px; letter-spacing: -0.01em; }
+.tmpl-copy {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--ink3);
+  font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  align-self: center;
+}
+.tmpl-copy:hover { border-color: var(--blue); color: var(--blue); }
+.tmpl-copy.ok { border-color: #16a34a; color: #16a34a; }
+
+/* Clientes guardados table */
+.clients-table { width: 100%; border-collapse: collapse; }
+.ct-head th {
+  text-align: left;
+  padding: 7px 12px;
+  font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.ct-row td {
+  padding: 9px 12px;
+  font-size: 0.78rem;
+  color: var(--ink2);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  transition: background 0.12s;
+}
+.ct-row:hover td { background: var(--surface2); }
+.ct-name { font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.ct-mono { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.68rem; }
+.ct-badge { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.58rem; padding: 2px 7px; border-radius: 5px; }
+.cb-active { background: #f0fdf4; color: #166534; }
+.cb-pend   { background: #fef9c3; color: #92400e; }
+
+/* Proyectos */
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 10px; }
+.proj-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+.proj-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+.proj-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.proj-name { font-size: 0.88rem; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; }
+.proj-status { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.58rem; padding: 2px 7px; border-radius: 5px; }
+.ps-active { background: #f0fdf4; color: #166534; }
+.ps-draft  { background: var(--surface2); color: var(--ink4); }
+.proj-client { font-size: 0.74rem; color: var(--ink3); margin-bottom: 10px; }
+.proj-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 5px; }
+.proj-bar { height: 100%; background: var(--blue); border-radius: 2px; }
+.proj-meta { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.6rem; color: var(--ink4); display: flex; justify-content: space-between; }
+
+/* Settings */
+.settings-section { margin-bottom: 1.5rem; }
+.settings-section-title {
+  font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 8px;
+}
+.settings-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1px;
+}
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.settings-item:last-child { border-bottom: none; }
+.settings-item:hover { background: var(--surface2); }
+.si-left { display: flex; align-items: center; gap: 10px; }
+.si-icon { font-size: 0.9rem; }
+.si-label { font-size: 0.82rem; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
+.si-sub { font-size: 0.7rem; color: var(--ink3); margin-top: 1px; letter-spacing: -0.01em; }
+.si-right { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; font-size: 0.68rem; color: var(--ink4); }
+
+/* Splash for app */
+.app-splash {
+  position: fixed;
+  inset: 0;
+  background: var(--surface);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.app-splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.as-icon {
+  width: 68px; height: 68px;
+  background: var(--blue);
+  border-radius: 17px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(37,99,235,0.25);
+  animation: splashPop2 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes splashPop2 {
+  from { opacity:0; transform:scale(0.7); }
+  to   { opacity:1; transform:scale(1); }
+}
+.as-name {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  animation: asFade 0.4s 0.15s ease both;
+}
+.as-name strong { font-weight: 600; }
+.as-name span { color: var(--blue); }
+@keyframes asFade { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+.as-bar-track { width: 160px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; animation: asFade 0.4s 0.3s ease both; }
+.as-bar-fill { height: 100%; width: 0%; background: var(--blue); border-radius: 2px; transition: width 0.08s linear; }
+
 </style>
 </head>
 <body>
+
+
+<!-- APP SPLASH -->
+<div class="app-splash" id="appSplash">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+    <div class="as-icon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </div>
+    <div class="as-name">Vitri<span><strong>ni</strong></span></div>
+  </div>
+  <div class="as-bar-track"><div class="as-bar-fill" id="asBar"></div></div>
+</div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -1225,26 +1581,26 @@ body {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Radar
     </div>
-    <div class="nav-item" onclick="tip('clientes')">
+    <div class="nav-item" onclick="navTo('clientes')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Clientes guardados
       <span class="nav-badge">0</span>
     </div>
-    <div class="nav-item" onclick="tip('proyectos')">
+    <div class="nav-item" onclick="navTo('proyectos')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h6l2 3H21a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
       Proyectos
       <span class="nav-badge">0</span>
     </div>
-    <div class="nav-item" onclick="tip('crm')">
+    <div class="nav-item" onclick="navTo('crm')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       CRM Kanban
       <span class="nav-badge soon">Pronto</span>
     </div>
-    <div class="nav-item" onclick="tip('plantillas')">
+    <div class="nav-item" onclick="navTo('plantillas')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Plantillas de mensaje
     </div>
-    <div class="nav-item" onclick="tip('stats')">
+    <div class="nav-item" onclick="navTo('stats')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       Estadísticas
     </div>
@@ -1306,11 +1662,11 @@ body {
             <div class="dd-name">Bastián</div>
             <div class="dd-email">mbastian549@gmail.com</div>
           </div>
-          <div class="dd-item" onclick="tip('perfil')">
+          <div class="dd-item" onclick="navTo('config')">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             Mi perfil
           </div>
-          <div class="dd-item" onclick="tip('config')">
+          <div class="dd-item" onclick="navTo('config')">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             Configuración
           </div>
@@ -1319,7 +1675,7 @@ body {
             Idioma
           </div>
           <div class="dd-sep"></div>
-          <div class="dd-item" onclick="tip('info')">
+          <div class="dd-item" onclick="navTo('config')">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             Más información
           </div>
@@ -1767,6 +2123,107 @@ function selectPlan(plan) {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing(); });
 
+
+// ── Section navigation ────────────────────────────────────
+const VIEWS = {
+  home:       null,
+  clientes:   'viewClientes',
+  proyectos:  'viewProyectos',
+  crm:        'viewCRM',
+  plantillas: 'viewPlantillas',
+  stats:      'viewStats',
+  config:     'viewConfig',
+};
+
+const TITLES = {
+  home:       'Radar de prospectos',
+  clientes:   'Clientes guardados',
+  proyectos:  'Proyectos',
+  crm:        'CRM Kanban',
+  plantillas: 'Plantillas',
+  stats:      'Estadísticas',
+  config:     'Configuración',
+};
+
+const NAV_LABELS = {
+  home:       'Radar',
+  clientes:   'Clientes guardados',
+  proyectos:  'Proyectos',
+  crm:        'CRM Kanban',
+  plantillas: 'Plantillas de mensaje',
+  stats:      'Estadísticas',
+  config:     'Configuración',
+};
+
+function navTo(section) {
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+
+  // Hide all views
+  document.getElementById('homeView').style.display  = 'none';
+  document.getElementById('loadingView').classList.remove('on');
+  document.getElementById('resultsView').classList.remove('on');
+  document.querySelectorAll('.section-view').forEach(v => v.classList.remove('on'));
+
+  // Update topbar title
+  document.getElementById('topbarTitle').textContent = TITLES[section] || 'Vitrini';
+
+  // Update nav active state
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navItems = document.querySelectorAll('.nav-item');
+  const labels = Object.values(NAV_LABELS);
+  navItems.forEach(n => {
+    if (n.textContent.trim().startsWith(NAV_LABELS[section]?.substring(0,8) || '___')) {
+      n.classList.add('active');
+    }
+  });
+
+  if (section === 'home') {
+    document.getElementById('homeView').style.display = 'flex';
+    document.querySelectorAll('.nav-item')[0].classList.add('active');
+    return;
+  }
+
+  const viewId = VIEWS[section];
+  if (viewId) document.getElementById(viewId).classList.add('on');
+}
+
+function copyTmpl(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('ok'); }, 2000);
+  });
+}
+
+// ── App splash ────────────────────────────────────────────
+function initAppSplash() {
+  const splash = document.getElementById('appSplash');
+  const bar    = document.getElementById('asBar');
+  if (!splash || !bar) return;
+  const steps = [15, 38, 62, 82, 96, 100];
+  let i = 0;
+  const killSwitch = setTimeout(() => {
+    splash.classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 4000);
+  const run = () => {
+    if (i >= steps.length) {
+      clearTimeout(killSwitch);
+      setTimeout(() => { splash.classList.add('hidden'); document.body.style.overflow = ''; }, 220);
+      return;
+    }
+    bar.style.width = steps[i++] + '%';
+    const d = i === 1 ? 280 : i >= steps.length ? 150 : 300 + Math.random()*220;
+    setTimeout(run, d);
+  };
+  setTimeout(run, 320);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAppSplash);
+} else {
+  initAppSplash();
+}
+
 </script>
 
 <!-- PRICING MODAL -->
@@ -1802,11 +2259,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing
         <div class="plan-features">
           <div class="feat-item">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            5 búsquedas por día
+            10 búsquedas totales de prueba
           </div>
           <div class="feat-item">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            Hasta 20 prospectos por búsqueda
+            Hasta 10 prospectos por búsqueda
           </div>
           <div class="feat-item">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>
@@ -1840,7 +2297,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing
         <div class="plan-features">
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            Búsquedas ilimitadas
+            Hasta 100 búsquedas al mes
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
@@ -1852,11 +2309,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Mensajes IA personalizados
+            Mensajes IA (Límite de 500/mes)
           </div>
           <div class="feat-item highlight">
-            <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Plantillas de propuesta PDF
+            <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Incluye 5 Auditorías SEO en PDF al mes
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -1890,11 +2347,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            Prospectos ilimitados por búsqueda
+            Hasta 500 búsquedas al mes
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Análisis SEO de cada web encontrada
+            Auditorías SEO en PDF ilimitadas
           </div>
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1911,6 +2368,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePricing
           <div class="feat-item highlight">
             <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Soporte prioritario 24/7
+          </div>
+          <div class="feat-item highlight">
+            <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12 19.79 19.79 0 0 1 1 3.18 2 2 0 0 1 3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg>
+            Automatización de mensajes a WhatsApp
           </div>
         </div>
       </div>
