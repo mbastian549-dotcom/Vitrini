@@ -3,256 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vitrini — Deja de buscar. Empieza a cerrar.</title>
+<title>Vitrini — Encuentra negocios locales sin web en segundos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,200;0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,200;0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0a0a0a;
-  --ink2: #1a1a1a;
-  --ink3: #3a3a3a;
-  --muted: #6b6b6b;
-  --subtle: #9b9b9b;
-  --border: #e8e8e8;
-  --border2: #d0d0d0;
-  --bg: #fafafa;
+  --ink2: #1c1c1e;
+  --ink3: #3a3a3c;
+  --muted: #6e6e73;
+  --subtle: #aeaeb2;
+  --border: #e5e5ea;
+  --border2: #d1d1d6;
+  --bg: #f2f2f7;
   --white: #ffffff;
   --blue: #2563eb;
   --blue2: #1d4ed8;
   --blue-light: #eff4ff;
   --blue-mid: #dbeafe;
-  --red: #dc2626;
   --green: #16a34a;
-  --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  --green-bg: #f0fdf4;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --orange: #ea580c;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
-}
-
-/* ══ NAV ══════════════════════════════════════ */
+/* ── NAV ────────────────────────────────── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(250,250,250,0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 0 2.5rem;
-  height: 56px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 2rem;
 }
 
 .nav-logo {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.04em;
   color: var(--ink);
 }
-
 .nav-logo span { color: var(--blue); }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-}
+.nav-right { display: flex; align-items: center; gap: 4px; }
 
 .nav-link {
-  font-size: 0.82rem;
-  font-weight: 400;
+  font-size: 0.8rem;
   color: var(--muted);
-  text-decoration: none;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 7px;
-  transition: all 0.15s;
   cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  font-weight: 400;
 }
-
-.nav-link:hover { background: var(--border); color: var(--ink); }
+.nav-link:hover { background: var(--bg); color: var(--ink); }
 
 .nav-cta {
   background: var(--ink);
   color: #fff;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  padding: 7px 18px;
+  padding: 7px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: all 0.15s;
   text-decoration: none;
-  margin-left: 8px;
+  margin-left: 6px;
   letter-spacing: -0.02em;
+  transition: background 0.15s;
 }
-
 .nav-cta:hover { background: var(--ink2); }
 
-/* ══ HERO ══════════════════════════════════════ */
+/* ── HERO ───────────────────────────────── */
 .hero {
-  min-height: 100vh;
+  padding: 96px 2rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 5rem;
   align-items: center;
-  padding: 80px 5vw 60px;
-  gap: 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
 }
 
-.hero-left { display: flex; flex-direction: column; gap: 2rem; }
+.hero-left { display: flex; flex-direction: column; gap: 1.8rem; }
 
-.hero-eyebrow {
+.hero-tag {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue);
+  gap: 6px;
   background: var(--blue-light);
   border: 1px solid var(--blue-mid);
-  padding: 5px 11px;
   border-radius: 20px;
+  padding: 4px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
   width: fit-content;
 }
 
-.eyebrow-dot {
-  width: 6px; height: 6px;
+.tag-dot {
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--blue);
-  animation: pulse 2s infinite;
+  animation: blink 2s infinite;
 }
-
-@keyframes pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
   font-weight: 300;
   letter-spacing: -0.05em;
-  line-height: 1.05;
+  line-height: 1.08;
   color: var(--ink);
 }
+.hero-title strong { font-weight: 600; }
+.hero-title .blue { color: var(--blue); font-weight: 600; }
 
-.hero-title strong {
-  font-weight: 600;
+.hero-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  max-width: 480px;
 }
 
-.hero-title .accent {
-  color: var(--blue);
-  font-weight: 600;
-}
+.hero-desc strong { color: var(--ink); font-weight: 500; }
 
-.hero-pain {
+/* Search demo input */
+.search-demo {
   background: var(--white);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--red);
-  border-radius: 0 10px 10px 0;
-  padding: 1rem 1.2rem;
-  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border2);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
 }
 
-.pain-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 6px;
-}
-
-.pain-text {
-  font-size: 0.88rem;
-  color: var(--ink3);
-  line-height: 1.6;
-  font-style: italic;
-}
-
-.pain-text strong { color: var(--ink); font-style: normal; font-weight: 500; }
-
-.hero-ctas {
+.search-demo-top {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid var(--border);
 }
 
-.cta-primary {
+.search-demo-input {
+  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: text;
+}
+
+.search-demo-btn {
   background: var(--blue);
   color: #fff;
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  padding: 14px 28px;
-  border-radius: 12px;
+  padding: 8px 16px;
+  border-radius: 9px;
   border: none;
   cursor: pointer;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.search-demo-btn:hover { background: var(--blue2); }
+
+.search-demo-opts {
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--subtle);
+}
+
+.opt-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  color: var(--muted);
+  cursor: pointer;
   transition: all 0.15s;
+}
+.opt-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.hero-ctas { display: flex; flex-direction: column; gap: 8px; }
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 13px 24px;
+  border-radius: 11px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.15s;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(37,99,235,0.3);
+}
+.btn-primary:hover { background: var(--blue2); transform: translateY(-1px); }
+
+.btn-google {
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  padding: 12px 24px;
+  border-radius: 11px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
   letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 2px 12px rgba(37,99,235,0.35);
-  text-decoration: none;
-}
-
-.cta-primary:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(37,99,235,0.4); }
-
-.cta-google {
-  background: var(--white);
-  color: var(--ink);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  padding: 13px 28px;
-  border-radius: 12px;
-  border: 1px solid var(--border2);
-  cursor: pointer;
   transition: all 0.15s;
-  letter-spacing: -0.02em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  box-shadow: var(--shadow);
   text-decoration: none;
+  box-shadow: var(--shadow-sm);
 }
+.btn-google:hover { background: var(--bg); }
 
-.cta-google:hover { background: var(--bg); border-color: var(--border2); }
-
-.google-icon { width: 18px; height: 18px; }
-
-.cta-sub {
+.btn-fine {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   color: var(--subtle);
   text-align: center;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
-/* ══ HERO RIGHT — mock UI ══════════════════════ */
-.hero-right {
-  position: relative;
-}
-
-.mock-window {
+/* ── HERO RIGHT — data table mock ────────── */
+.mock-wrap {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -260,263 +279,352 @@ nav {
   overflow: hidden;
 }
 
-.mock-titlebar {
-  background: #f5f5f5;
+.mock-bar {
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
-  padding: 10px 14px;
+  padding: 9px 14px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-
-.mock-dot { width: 10px; height: 10px; border-radius: 50%; }
-.mock-dot.red { background: #ff5f56; }
-.mock-dot.yellow { background: #ffbd2e; }
-.mock-dot.green { background: #27c93f; }
-
-.mock-url {
-  margin-left: 8px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 3px 10px;
+.mdot { width: 9px; height: 9px; border-radius: 50%; }
+.mdot.r { background: #ff5f56; }
+.mdot.y { background: #ffbd2e; }
+.mdot.g { background: #27c93f; }
+.mock-bar-title {
+  margin-left: 6px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.62rem;
   color: var(--subtle);
-  flex: 1;
-  max-width: 200px;
 }
 
-.mock-body { padding: 1.4rem; }
-
-/* Pain scenario inside mock */
-.scenario-title {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--subtle);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 0.9rem;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.scenario-list { display: flex; flex-direction: column; gap: 8px; }
-
-.scenario-item {
+.mock-search-bar {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 11px;
-  border-radius: 9px;
-  border: 1px solid var(--border);
-  font-size: 0.79rem;
-  color: var(--ink3);
-  animation: itemIn 0.4s ease both;
+  gap: 8px;
 }
 
-@keyframes itemIn {
-  from { opacity: 0; transform: translateX(-8px); }
+.mock-city-pill {
+  background: var(--blue-light);
+  border: 1px solid var(--blue-mid);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--blue);
+}
+
+.mock-type-pill {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+.mock-count {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--subtle);
+}
+
+/* Table */
+.mock-table { width: 100%; }
+
+.mock-thead {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.mock-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 70px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.1s;
+  animation: rowIn 0.3s ease both;
+}
+
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-6px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.scenario-item:nth-child(1) { animation-delay: 0.1s; }
-.scenario-item:nth-child(2) { animation-delay: 0.2s; }
-.scenario-item:nth-child(3) { animation-delay: 0.3s; }
-.scenario-item:nth-child(4) { animation-delay: 0.4s; }
-.scenario-item:nth-child(5) { animation-delay: 0.5s; }
+.mock-row:nth-child(1) { animation-delay: 0.05s; }
+.mock-row:nth-child(2) { animation-delay: 0.10s; }
+.mock-row:nth-child(3) { animation-delay: 0.15s; }
+.mock-row:nth-child(4) { animation-delay: 0.20s; }
+.mock-row:nth-child(5) { animation-delay: 0.25s; }
+.mock-row:last-child { border-bottom: none; }
+.mock-row:hover { background: var(--bg); }
 
-.scenario-item.pain {
-  background: #fff5f5;
-  border-color: #fecaca;
-  color: var(--red);
+.row-name { font-size: 0.78rem; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
+.row-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--subtle); margin-top: 1px; }
+
+.row-phone {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--ink3);
 }
 
-.scenario-item.win {
-  background: #f0fdf4;
-  border-color: #86efac;
-  color: var(--green);
+.row-web {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  padding: 2px 7px;
+  border-radius: 5px;
 }
 
-.s-icon { font-size: 0.95rem; flex-shrink: 0; }
-.s-name { font-weight: 500; flex: 1; color: var(--ink); }
-.s-status { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; }
+.web-no { background: var(--red-bg); color: var(--red); }
+.web-yes { background: var(--bg); color: var(--subtle); }
+.web-basic { background: #fef9c3; color: #854d0e; }
 
-.mock-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 1rem 0;
+.row-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-align: right;
 }
+.score-hot { color: var(--red); }
+.score-mid { color: var(--orange); }
+.score-low { color: var(--subtle); }
 
-.mock-solution {
-  background: var(--blue-light);
-  border: 1px solid var(--blue-mid);
-  border-radius: 10px;
-  padding: 10px 12px;
+.mock-footer-bar {
+  padding: 8px 14px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.mfooter-txt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--subtle);
+}
+
+.mfooter-btn {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── STATS BAND ──────────────────────────── */
+.stats-band {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+}
+
+.stats-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.stat-cell {
+  background: var(--white);
+  padding: 1.4rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 2.2rem;
+  font-weight: 200;
+  letter-spacing: -0.06em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-num span { color: var(--blue); }
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--subtle);
+  letter-spacing: 0.06em;
+}
+
+/* ── WHAT YOU GET ────────────────────────── */
+.features {
+  padding: 5rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 0.8rem;
+}
+
+.section-h {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.15;
+}
+.section-h strong { font-weight: 600; }
+
+.section-sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
   gap: 10px;
 }
 
-.sol-icon {
-  width: 32px; height: 32px;
-  background: var(--blue);
-  border-radius: 8px;
+.feat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
+}
+.feat-card:hover { border-color: var(--border2); box-shadow: var(--shadow); transform: translateY(-1px); }
+
+.feat-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.fi-blue { background: var(--blue-light); }
+.fi-green { background: var(--green-bg); }
+.fi-red { background: var(--red-bg); }
+.fi-gray { background: var(--bg); }
+.fi-yellow { background: #fef9c3; }
+.fi-purple { background: #f5f3ff; }
+
+.feat-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+}
+
+.feat-desc {
+  font-size: 0.76rem;
+  color: var(--muted);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* ── HOW ─────────────────────────────────── */
+.how {
+  padding: 5rem 2rem;
+  background: var(--bg);
+}
+
+.how-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.steps {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.step-row {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.step-row:last-child { border-bottom: none; }
+.step-row:hover { background: var(--bg); }
+
+.step-num-col {
+  padding: 1.4rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.sol-text { font-size: 0.78rem; color: var(--blue2); line-height: 1.4; }
-.sol-text strong { font-weight: 600; display: block; margin-bottom: 1px; }
+.step-row:last-child .step-num { background: var(--blue); }
 
-/* ══ PAIN SECTION ══════════════════════════════ */
-.pain-section {
-  background: var(--ink);
-  padding: 6rem 5vw;
-}
-
-.pain-section-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.section-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--subtle);
-  margin-bottom: 1.2rem;
-}
-
-.pain-headline {
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 300;
-  letter-spacing: -0.05em;
-  line-height: 1.1;
-  color: #fff;
-  margin-bottom: 1rem;
-}
-
-.pain-headline strong { font-weight: 600; }
-
-.pain-desc {
-  font-size: 1rem;
-  color: #888;
-  line-height: 1.7;
-  max-width: 600px;
-  margin-bottom: 3rem;
-  letter-spacing: -0.01em;
-}
-
-.pain-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.pain-card {
-  background: #161616;
-  border: 1px solid #2a2a2a;
-  border-radius: 14px;
-  padding: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.pain-card-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: #444;
-}
-
-.pain-card-icon { font-size: 1.6rem; }
-
-.pain-card-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: -0.03em;
-  line-height: 1.3;
-}
-
-.pain-card-desc {
-  font-size: 0.78rem;
-  color: #666;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
-}
-
-/* ══ HOW IT WORKS ══════════════════════════════ */
-.how-section {
-  padding: 6rem 5vw;
-  background: var(--white);
-}
-
-.how-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.section-title {
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 300;
-  letter-spacing: -0.05em;
-  color: var(--ink);
-  margin-bottom: 0.6rem;
-}
-
-.section-title strong { font-weight: 600; }
-
-.section-sub {
-  font-size: 0.9rem;
-  color: var(--muted);
-  margin-bottom: 3rem;
-  letter-spacing: -0.01em;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.step {
-  background: var(--white);
-  padding: 1.8rem 1.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.step-num {
-  width: 28px; height: 28px;
-  border-radius: 8px;
-  background: var(--ink);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.step:nth-child(3) .step-num { background: var(--blue); }
+.step-content { padding: 1.4rem 1.4rem 1.4rem 1.2rem; }
 
 .step-title {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
   letter-spacing: -0.03em;
-  line-height: 1.3;
+  margin-bottom: 5px;
 }
 
 .step-desc {
@@ -526,492 +634,1016 @@ nav {
   letter-spacing: -0.01em;
 }
 
-.step-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blue);
-  background: var(--blue-light);
-  padding: 3px 8px;
-  border-radius: 4px;
-  width: fit-content;
-  margin-top: auto;
+/* data chips */
+.data-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-/* ══ TESTIMONIALS ══════════════════════════════ */
-.testimonials {
-  padding: 5rem 5vw;
+.dchip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--ink3);
 }
 
-.test-inner {
-  max-width: 900px;
+.dchip.green { background: var(--green-bg); border-color: #86efac; color: var(--green); }
+.dchip.red { background: var(--red-bg); border-color: #fca5a5; color: var(--red); }
+.dchip.blue { background: var(--blue-light); border-color: var(--blue-mid); color: var(--blue); }
+
+/* ── PRICING TEASER ──────────────────────── */
+.pricing-teaser {
+  padding: 5rem 2rem;
+  max-width: 820px;
   margin: 0 auto;
 }
 
-.test-grid {
+.pricing-grid {
+  margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 2.5rem;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
 }
 
-.test-card {
-  background: var(--white);
+.price-card {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 1.4rem;
+  background: var(--white);
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  box-shadow: var(--shadow);
+  gap: 0.6rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.test-stars {
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  color: #f59e0b;
+.price-card.featured {
+  border-color: var(--blue);
+  background: var(--blue-light);
+  box-shadow: 0 0 0 3px var(--blue-mid), var(--shadow);
 }
 
-.test-quote {
-  font-size: 0.84rem;
-  color: var(--ink3);
-  line-height: 1.65;
-  letter-spacing: -0.01em;
-  flex: 1;
-}
-
-.test-author {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--border);
-}
-
-.test-avatar {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.test-name {
-  font-size: 0.78rem;
+.price-name {
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
-.test-role {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--subtle);
+.price-amount {
+  font-size: 2rem;
+  font-weight: 200;
+  letter-spacing: -0.06em;
+  color: var(--ink);
+  line-height: 1;
 }
 
-/* ══ CTA SECTION ═══════════════════════════════ */
-.cta-section {
-  padding: 6rem 5vw;
+.price-amount sup { font-size: 0.9rem; font-weight: 400; vertical-align: super; }
+.price-amount span { font-size: 0.78rem; font-weight: 400; color: var(--muted); }
+
+.price-desc {
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.price-card.featured .price-desc { border-color: var(--blue-mid); }
+
+.price-features { display: flex; flex-direction: column; gap: 5px; }
+
+.pf-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
+  color: var(--ink3);
+  letter-spacing: -0.01em;
+}
+
+.pf-row svg { flex-shrink: 0; opacity: 0.5; }
+
+.price-btn {
+  margin-top: auto;
+  padding: 9px;
+  border-radius: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: all 0.15s;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.pb-ghost { background: var(--bg); color: var(--muted); cursor: default; }
+.pb-blue { background: var(--blue); color: #fff; }
+.pb-blue:hover { background: var(--blue2); }
+.pb-dark { background: var(--ink); color: #fff; }
+.pb-dark:hover { background: var(--ink2); }
+
+/* ── CTA FINAL ───────────────────────────── */
+.cta-final {
   background: var(--ink);
+  padding: 5rem 2rem;
   text-align: center;
 }
 
 .cta-inner {
-  max-width: 560px;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
 
-.cta-headline {
-  font-size: clamp(2rem, 4vw, 3rem);
+.cta-h {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 300;
   letter-spacing: -0.05em;
-  line-height: 1.1;
   color: #fff;
+  line-height: 1.1;
 }
+.cta-h strong { font-weight: 600; }
+.cta-h .acc { color: #60a5fa; }
 
-.cta-headline strong { font-weight: 600; color: #fff; }
-.cta-headline .accent { color: #60a5fa; }
+.cta-p { font-size: 0.86rem; color: #666; letter-spacing: -0.01em; line-height: 1.6; }
 
-.cta-sub-text {
-  font-size: 0.88rem;
-  color: #666;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
-}
+.cta-btns { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 340px; }
 
-.cta-btn-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 380px;
-}
-
-.btn-cta-main {
+.cta-btn-main {
   background: #fff;
   color: var(--ink);
   font-family: 'Inter', sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 13px;
+  border-radius: 11px;
   border: none;
   cursor: pointer;
   letter-spacing: -0.02em;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
   text-decoration: none;
+  transition: background 0.15s;
 }
+.cta-btn-main:hover { background: #f0f0f0; }
 
-.btn-cta-main:hover { background: #f0f0f0; }
-
-.btn-cta-google {
+.cta-btn-g {
   background: transparent;
-  color: #aaa;
+  color: #888;
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 400;
-  padding: 13px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 11px;
   border: 1px solid #2a2a2a;
   cursor: pointer;
   letter-spacing: -0.02em;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   text-decoration: none;
+  transition: all 0.15s;
 }
-
-.btn-cta-google:hover { border-color: #444; color: #ccc; }
+.cta-btn-g:hover { border-color: #444; color: #bbb; }
 
 .cta-fine {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   color: #444;
   letter-spacing: 0.04em;
 }
 
-/* ══ FOOTER ════════════════════════════════════ */
+/* ── FOOTER ──────────────────────────────── */
 footer {
   background: var(--ink);
   border-top: 1px solid #1a1a1a;
-  padding: 2rem 5vw;
+  padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.footer-logo {
-  font-size: 0.9rem;
+.foot-logo { font-size: 0.88rem; font-weight: 600; letter-spacing: -0.04em; color: #fff; }
+.foot-logo span { color: #60a5fa; }
+
+.foot-links { display: flex; gap: 1.2rem; }
+.foot-link { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: #444; text-decoration: none; cursor: pointer; transition: color 0.15s; letter-spacing: 0.04em; }
+.foot-link:hover { color: #888; }
+
+.foot-copy { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: #333; letter-spacing: 0.04em; }
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 80px; gap: 2rem; }
+  .mock-wrap { display: none; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .features-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .foot-links { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ══ LOGIN MODAL ══════════════════════════ */
+.login-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,15,15,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.18s ease;
+}
+.login-backdrop.open { display: flex; }
+
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.login-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 420px;
+  padding: 2.2rem 2.2rem 2rem;
+  position: relative;
+  animation: slideUp 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(12px) scale(0.98); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.login-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.login-close:hover { background: var(--border); color: var(--ink); }
+
+.login-logo {
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.04em;
-  color: #fff;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+.login-logo span { color: var(--blue); }
+
+.login-title {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+  line-height: 1.2;
+}
+.login-title strong { font-weight: 600; }
+
+.login-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.01em;
 }
 
-.footer-logo span { color: #60a5fa; }
-
-.footer-links {
+/* Google button */
+.login-google {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--border2);
+  border-radius: 10px;
+  padding: 11px 16px;
   display: flex;
-  gap: 1.5rem;
-}
-
-.footer-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  color: #444;
-  text-decoration: none;
-  letter-spacing: 0.04em;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--ink);
   cursor: pointer;
-  transition: color 0.15s;
+  transition: all 0.15s;
+  letter-spacing: -0.02em;
+  box-shadow: var(--shadow-sm);
 }
+.login-google:hover { background: var(--bg); border-color: var(--border2); box-shadow: var(--shadow); }
 
-.footer-link:hover { color: #888; }
-
-.footer-copy {
+/* Divider */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1.2rem 0;
+}
+.login-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.login-divider-text {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: #333;
-  letter-spacing: 0.04em;
+  color: var(--subtle);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
-/* ══ RESPONSIVE ════════════════════════════════ */
-@media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; }
-  .hero-right { display: none; }
-  .pain-cards { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr; }
-  .test-grid { grid-template-columns: 1fr; }
-  nav { padding: 0 1.2rem; }
-  .nav-links .nav-link { display: none; }
-  footer { flex-direction: column; gap: 1rem; text-align: center; }
-  .footer-links { flex-wrap: wrap; justify-content: center; }
+/* Form */
+.login-form { display: flex; flex-direction: column; gap: 10px; }
+
+.login-field { display: flex; flex-direction: column; gap: 5px; }
+
+.login-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
+
+.login-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 10px 13px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  letter-spacing: -0.01em;
+}
+.login-input:focus {
+  border-color: var(--blue);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.login-input::placeholder { color: var(--subtle); font-weight: 400; }
+
+.login-forgot {
+  font-size: 0.72rem;
+  color: var(--blue);
+  text-align: right;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  margin-top: -4px;
+  align-self: flex-end;
+  transition: opacity 0.15s;
+}
+.login-forgot:hover { opacity: 0.7; }
+
+.login-submit {
+  width: 100%;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.02em;
+  transition: all 0.15s;
+  margin-top: 2px;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.25);
+}
+.login-submit:hover { background: var(--blue2); box-shadow: 0 4px 14px rgba(37,99,235,0.35); }
+
+/* Switch to register */
+.login-switch {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.76rem;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+.login-switch a {
+  color: var(--blue);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+.login-switch a:hover { text-decoration: underline; }
+
+.login-terms {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.57rem;
+  color: var(--subtle);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+.login-terms a { color: var(--muted); text-decoration: underline; cursor: pointer; }
+
+
+
 </style>
 </head>
 <body>
 
+
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Vitri<span>ni</span></div>
-  <div class="nav-links">
-    <a class="nav-link" href="#pain">El problema</a>
-    <a class="nav-link" href="#how">Cómo funciona</a>
-    <a class="nav-link" href="#testimonials">Testimonios</a>
-    <a class="nav-link" href="vitrini.html">Iniciar sesión</a>
-    <a class="nav-cta" href="vitrini.html">Empezar gratis →</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#como">Cómo funciona</a>
+    <a class="nav-link" href="#precios">Precios</a>
+    <button class="nav-link" onclick="openLogin()" style="cursor:pointer;border:none;background:transparent">Iniciar sesión</button>
+    <button class="nav-cta" onclick="openLogin()">Empezar gratis →</button>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">
-      <span class="eyebrow-dot"></span>
-      Para diseñadores y freelancers web
+    <div class="hero-tag">
+      <span class="tag-dot"></span>
+      Prospección local para freelancers web
     </div>
 
     <h1 class="hero-title">
-      Deja de buscar.<br>
-      <strong>Empieza a <span class="accent">cerrar.</span></strong>
+      Todos los negocios<br>
+      de tu ciudad.<br>
+      <strong>Con teléfono, email<br>y si tienen <span class="blue">web o no.</span></strong>
     </h1>
 
-    <div class="hero-pain">
-      <div class="pain-label">¿Te suena familiar?</div>
-      <div class="pain-text">
-        "Encuentro negocios perfectos en Google Maps. Los anoto. Veo que no tienen web.
-        Tengo su número. <strong>Pero cuando llego al momento de llamar... me bloqueo.</strong>
-        ¿Y si me dicen que no? ¿Y si sueno desesperado? Así pasan los días y nunca llamo a nadie."
-      </div>
-    </div>
+    <p class="hero-desc">
+      Escribe una ciudad y un tipo de negocio.
+      Vitrini te da la lista completa — con contacto directo y una señal clara de si son un <strong>potencial cliente</strong> o no.
+      Sin buscar uno por uno en Google Maps.
+    </p>
 
     <div class="hero-ctas">
-      <a class="cta-primary" href="vitrini.html">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Empezar gratis — sin tarjeta
-      </a>
-      <a class="cta-google" href="vitrini.html">
-        <svg class="google-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      <button class="btn-primary" onclick="openLogin()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar negocios gratis
+      </button>
+      <button class="btn-google" onclick="handleGoogle()">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continuar con Google
-      </a>
-      <div class="cta-sub">10 búsquedas gratis · Sin tarjeta · Cancela cuando quieras</div>
+      </button>
+      <div class="btn-fine">10 búsquedas gratis · Sin tarjeta · Cancela cuando quieras</div>
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="mock-window">
-      <div class="mock-titlebar">
-        <div class="mock-dot red"></div>
-        <div class="mock-dot yellow"></div>
-        <div class="mock-dot green"></div>
-        <div class="mock-url">vitrini.app · Puerto Montt</div>
+  <!-- DATA TABLE MOCK -->
+  <div class="mock-wrap">
+    <div class="mock-bar">
+      <div class="mdot r"></div><div class="mdot y"></div><div class="mdot g"></div>
+      <div class="mock-bar-title">Vitrini · Resultados</div>
+    </div>
+    <div class="mock-search-bar">
+      <span class="mock-city-pill">📍 Puerto Montt</span>
+      <span class="mock-type-pill">Restaurantes</span>
+      <span class="mock-count">47 negocios encontrados</span>
+    </div>
+    <div class="mock-table">
+      <div class="mock-thead">
+        <div class="th">Negocio</div>
+        <div class="th">Teléfono</div>
+        <div class="th">Web</div>
+        <div class="th" style="text-align:right">Score</div>
       </div>
-      <div class="mock-body">
-        <div class="scenario-title">Sin Vitrini — tu semana típica</div>
-        <div class="scenario-list">
-          <div class="scenario-item pain">
-            <span class="s-icon">😰</span>
-            <span class="s-name">Peluquería Renata — 4.8★</span>
-            <span class="s-status">Sin llamar</span>
-          </div>
-          <div class="scenario-item pain">
-            <span class="s-icon">😰</span>
-            <span class="s-name">Café El Bosque — sin web</span>
-            <span class="s-status">Sin llamar</span>
-          </div>
-          <div class="scenario-item pain">
-            <span class="s-icon">😰</span>
-            <span class="s-name">Barbería Hernández</span>
-            <span class="s-status">Sin llamar</span>
-          </div>
+      <div class="mock-row">
+        <div>
+          <div class="row-name">Restaurante Don Pedro</div>
+          <div class="row-sub">Av. Diego Portales 820</div>
         </div>
-        <div class="mock-divider"></div>
-        <div class="scenario-title">Con Vitrini — mismo lunes</div>
-        <div class="scenario-list">
-          <div class="scenario-item win">
-            <span class="s-icon">✅</span>
-            <span class="s-name">Peluquería Renata</span>
-            <span class="s-status">Mensaje enviado</span>
-          </div>
-          <div class="scenario-item win">
-            <span class="s-icon">✅</span>
-            <span class="s-name">Café El Bosque</span>
-            <span class="s-status">Reunión agendada</span>
-          </div>
-          <div class="scenario-item win">
-            <span class="s-icon">💰</span>
-            <span class="s-name">Barbería Hernández</span>
-            <span class="s-status">Cliente cerrado</span>
-          </div>
-        </div>
-        <div class="mock-divider"></div>
-        <div class="mock-solution">
-          <div class="sol-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="sol-text">
-            <strong>Mensaje generado por IA</strong>
-            "Hola Renata, vi tu peluquería en Maps — 4.8★ sin web. ¿Te ayudo a conseguir más clientes online?"
-          </div>
-        </div>
+        <div class="row-phone">+56 9 8821 4430</div>
+        <div><span class="row-web web-no">✕ Sin web</span></div>
+        <div class="row-score score-hot">9 🔥</div>
       </div>
+      <div class="mock-row">
+        <div>
+          <div class="row-name">Café El Puerto</div>
+          <div class="row-sub">Urmeneta 441</div>
+        </div>
+        <div class="row-phone">+56 9 7743 2201</div>
+        <div><span class="row-web web-no">✕ Sin web</span></div>
+        <div class="row-score score-hot">8 🔥</div>
+      </div>
+      <div class="mock-row">
+        <div>
+          <div class="row-name">Parrilla Los Alamos</div>
+          <div class="row-sub">Ruta 5 Sur, km 1010</div>
+        </div>
+        <div class="row-phone">+56 9 6612 9980</div>
+        <div><span class="row-web web-basic">⚠ Web básica</span></div>
+        <div class="row-score score-mid">6 🌤</div>
+      </div>
+      <div class="mock-row">
+        <div>
+          <div class="row-name">Sushi Montt</div>
+          <div class="row-sub">Av. Copihue 1140</div>
+        </div>
+        <div class="row-phone">—</div>
+        <div><span class="row-web web-no">✕ Sin web</span></div>
+        <div class="row-score score-mid">5 🌤</div>
+      </div>
+      <div class="mock-row">
+        <div>
+          <div class="row-name">La Nave Resto-Bar</div>
+          <div class="row-sub">Benavente 550</div>
+        </div>
+        <div class="row-phone">+56 9 9900 1123</div>
+        <div><span class="row-web web-yes">✓ Tiene web</span></div>
+        <div class="row-score score-low" style="color:var(--subtle)">2 ❄</div>
+      </div>
+    </div>
+    <div class="mock-footer-bar">
+      <span class="mfooter-txt">38 sin web · 6 web básica · 3 con web</span>
+      <button class="mfooter-btn">↓ Exportar CSV</button>
     </div>
   </div>
 </section>
 
-<!-- PAIN SECTION -->
-<section class="pain-section" id="pain">
-  <div class="pain-section-inner">
-    <div class="section-eyebrow">El problema real</div>
-    <h2 class="pain-headline">
-      El problema no es encontrar clientes.<br>
-      <strong>Es romper el hielo.</strong>
-    </h2>
-    <p class="pain-desc">
-      Cada diseñador web sabe buscar en Google Maps. El cuello de botella no es la prospección — es el momento en que tienes que escribir o llamar a alguien que no te conoce. Vitrini elimina esa fricción.
-    </p>
-    <div class="pain-cards">
-      <div class="pain-card">
-        <div class="pain-card-num">01</div>
-        <div class="pain-card-icon">🔍</div>
-        <div class="pain-card-title">Pasas horas en Google Maps sin resultado</div>
-        <div class="pain-card-desc">Scrolleas, copias números en Excel, buscas emails uno por uno. Todo manual. Todo lento. Y al final del día, no contactaste a nadie.</div>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card-num">02</div>
-        <div class="pain-card-icon">😶</div>
-        <div class="pain-card-title">Tienes el número pero no sabes qué decir</div>
-        <div class="pain-card-desc">"¿Y si me dicen que no?" "¿Y si sueno desesperado?" "¿Y si no les interesa?" El miedo al rechazo paraliza más que la falta de clientes.</div>
-      </div>
-      <div class="pain-card">
-        <div class="pain-card-num">03</div>
-        <div class="pain-card-icon">📉</div>
-        <div class="pain-card-title">Los que contactas no responden</div>
-        <div class="pain-card-desc">Mensaje genérico → ignorado. Sin contexto del negocio, sin personalización, sin urgencia. El prospecto siente que eres uno más entre cien.</div>
-      </div>
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-cell">
+      <div class="stat-num">+<span>500</span></div>
+      <div class="stat-label">Tipos de negocio</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num"><span>3</span>datos</div>
+      <div class="stat-label">Teléfono · Email · Web</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num"><span>&lt;</span>60s</div>
+      <div class="stat-label">Por búsqueda</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num"><span>0</span></div>
+      <div class="stat-label">Búsqueda manual</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT YOU GET -->
+<section class="features" id="datos">
+  <div class="section-label">Qué obtienes</div>
+  <h2 class="section-h">Los datos que necesitas<br><strong>para decidir a quién llamar.</strong></h2>
+  <p class="section-sub">Nada más. Nada menos. La información exacta para saber si un negocio es un prospecto.</p>
+
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-blue">📞</div>
+      <div class="feat-title">Teléfono directo</div>
+      <div class="feat-desc">El número de contacto del negocio cuando está disponible públicamente. Listo para llamar o enviar WhatsApp.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-green">✉️</div>
+      <div class="feat-title">Email de contacto</div>
+      <div class="feat-desc">Dirección de correo del negocio cuando está disponible. Para campañas o contacto directo sin intermediarios.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-red">🌐</div>
+      <div class="feat-title">Estado de su web</div>
+      <div class="feat-desc">Sin web, web básica o web completa. El dato más importante para saber si eres útil para ese negocio o no.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-yellow">📍</div>
+      <div class="feat-title">Dirección exacta</div>
+      <div class="feat-desc">La dirección registrada del negocio con enlace directo a Google Maps para ubicarlo al instante.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-gray">🎯</div>
+      <div class="feat-title">Score de oportunidad</div>
+      <div class="feat-desc">Un número del 1 al 10 que resume qué tan buen prospecto es ese negocio, basado en actividad y presencia digital.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap fi-purple">📄</div>
+      <div class="feat-title">Exportar CSV</div>
+      <div class="feat-desc">Toda la lista en un archivo listo para abrir en Excel o Google Sheets y trabajar tus prospectos como quieras.</div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="how-section" id="how">
+<section class="how" id="como">
   <div class="how-inner">
-    <div class="section-eyebrow" style="color:var(--subtle);margin-bottom:0.8rem">Cómo funciona</div>
-    <h2 class="section-title">De la búsqueda al <strong>primer mensaje</strong><br>en menos de 60 segundos.</h2>
-    <p class="section-sub">Sin Excel. Sin copiar y pegar. Sin quedarte en blanco.</p>
+    <div class="section-label">Cómo funciona</div>
+    <h2 class="section-h">Tres pasos.<br><strong>Una lista de prospectos.</strong></h2>
+    <p class="section-sub">Sin registros complicados, sin configuración. Funciona desde el primer minuto.</p>
+
     <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-title">Escribe tu ciudad y el tipo de negocio</div>
-        <div class="step-desc">Vitrini escanea el mapa y encuentra todos los negocios sin web o con presencia digital débil en tu zona — en segundos.</div>
-        <div class="step-tag">Radar automático</div>
+      <div class="step-row">
+        <div class="step-num-col"><div class="step-num">1</div></div>
+        <div class="step-content">
+          <div class="step-title">Escribe la ciudad y el tipo de negocio</div>
+          <div class="step-desc">Puedes buscar por ciudad completa o barrio específico. Elige entre más de 15 tipos: restaurantes, peluquerías, talleres, dentistas, hoteles, y más.</div>
+          <div class="data-chips">
+            <span class="dchip blue">📍 Santiago</span>
+            <span class="dchip blue">📍 Puerto Montt</span>
+            <span class="dchip blue">📍 Medellín</span>
+            <span class="dchip">Radio: 2 a 20km</span>
+          </div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-title">Elige los prospectos más calientes</div>
-        <div class="step-desc">Cada negocio tiene un score de oportunidad. Los más activos, con más reseñas y sin web son tus mejores candidatos. Tú eliges a quién contactar.</div>
-        <div class="step-tag">Score de oportunidad</div>
+      <div class="step-row">
+        <div class="step-num-col"><div class="step-num">2</div></div>
+        <div class="step-content">
+          <div class="step-title">Vitrini escanea y clasifica en segundos</div>
+          <div class="step-desc">Cada negocio aparece con su teléfono, email, dirección y estado de web. Los que no tienen web o tienen una muy básica quedan marcados como oportunidades claras.</div>
+          <div class="data-chips">
+            <span class="dchip red">✕ Sin web → prospecto</span>
+            <span class="dchip" style="background:#fef9c3;border-color:#fde68a;color:#92400e">⚠ Web básica</span>
+            <span class="dchip green">✓ Tiene web</span>
+          </div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-title">Copia el mensaje y envíalo</div>
-        <div class="step-desc">Vitrini genera un mensaje personalizado para cada negocio — con su nombre, sector y problema específico. Un clic para copiar, listo para WhatsApp o email.</div>
-        <div class="step-tag" style="background:#e0f2fe;color:#0369a1">IA incluida</div>
+      <div class="step-row">
+        <div class="step-num-col"><div class="step-num">3</div></div>
+        <div class="step-content">
+          <div class="step-title">Contacta directamente o exporta la lista</div>
+          <div class="step-desc">Llama, envía WhatsApp o escribe un email. O exporta todo a CSV y trabájalo en tu propio flujo. Los datos son tuyos — sin restricciones.</div>
+          <div class="data-chips">
+            <span class="dchip">📞 Llamar</span>
+            <span class="dchip">💬 WhatsApp</span>
+            <span class="dchip">✉️ Email</span>
+            <span class="dchip green">↓ Exportar CSV</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="testimonials">
-  <div class="test-inner">
-    <div class="section-eyebrow" style="color:var(--subtle);margin-bottom:0.8rem">Lo que dicen nuestros usuarios</div>
-    <h2 class="section-title">Resultados <strong>reales</strong><br>de freelancers como tú.</h2>
-    <div class="test-grid">
-      <div class="test-card">
-        <div class="test-stars">★★★★★</div>
-        <div class="test-quote">"Llevaba 3 meses sin cerrar un cliente. En la primera semana con Vitrini mandé 40 mensajes — sin miedo porque ya tenían el contexto perfecto. Cerré 2 proyectos."</div>
-        <div class="test-author">
-          <div class="test-avatar" style="background:#2563eb">CM</div>
-          <div>
-            <div class="test-name">Carlos M.</div>
-            <div class="test-role">Diseñador web · Santiago</div>
-          </div>
+<!-- PRICING TEASER -->
+<section class="pricing-teaser" id="precios">
+  <div class="section-label">Precios</div>
+  <h2 class="section-h">Simple. <strong>Sin sorpresas.</strong></h2>
+  <p class="section-sub">Empieza gratis, paga solo cuando lo necesites.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Gratis</div>
+      <div class="price-amount"><sup>$</sup>0 <span>USD/mes</span></div>
+      <div class="price-desc">Para probar si Vitrini funciona para tu negocio. Sin tarjeta.</div>
+      <div class="price-features">
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/></svg>
+          10 búsquedas totales
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Hasta 10 prospectos por búsqueda
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>
+          Exportar CSV
         </div>
       </div>
-      <div class="test-card">
-        <div class="test-stars">★★★★★</div>
-        <div class="test-quote">"El mensaje personalizado marca la diferencia. Antes mandaba el mismo texto a todos. Ahora cada mensaje menciona el nombre del negocio y su problema real. La tasa de respuesta subió a un 30%."</div>
-        <div class="test-author">
-          <div class="test-avatar" style="background:#7c3aed">AL</div>
-          <div>
-            <div class="test-name">Ana L.</div>
-            <div class="test-role">Freelance · Medellín</div>
-          </div>
+      <a class="price-btn pb-ghost" href="#">Tu plan actual</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-name">Pro</div>
+      <div class="price-amount"><sup>$</sup>15 <span>USD/mes</span></div>
+      <div class="price-desc">Para freelancers que quieren escalar su prospección.</div>
+      <div class="price-features">
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/></svg>
+          100 búsquedas al mes
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          100 prospectos por búsqueda
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          CRM Kanban + historial
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+          5 auditorías SEO en PDF al mes
         </div>
       </div>
-      <div class="test-card">
-        <div class="test-stars">★★★★★</div>
-        <div class="test-quote">"Lo que más me ayudó fue perder el miedo. Cuando tienes el mensaje listo y sabes exactamente qué decirle a cada negocio, ya no te da pánico apretar enviar."</div>
-        <div class="test-author">
-          <div class="test-avatar" style="background:#059669">RP</div>
-          <div>
-            <div class="test-name">Rodrigo P.</div>
-            <div class="test-role">Agencia · Buenos Aires</div>
-          </div>
+      <button class="price-btn pb-blue" onclick="openLogin()">Empezar con Pro</button>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Ultra</div>
+      <div class="price-amount"><sup>$</sup>40 <span>USD/mes</span></div>
+      <div class="price-desc">Para agencias y equipos con alto volumen de prospección.</div>
+      <div class="price-features">
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/></svg>
+          500 búsquedas al mes
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
+          Extracción automática de emails
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+          Auditorías SEO ilimitadas
+        </div>
+        <div class="pf-row">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          Hasta 5 usuarios en equipo
         </div>
       </div>
+      <button class="price-btn pb-dark" onclick="openLogin()">Empezar con Ultra</button>
     </div>
   </div>
 </section>
 
 <!-- CTA FINAL -->
-<section class="cta-section">
+<section class="cta-final">
   <div class="cta-inner">
-    <h2 class="cta-headline">
-      Tu próximo cliente<br>
-      <strong>ya está en <span class="accent">el mapa.</span></strong>
+    <h2 class="cta-h">
+      Tu próxima lista de<br>
+      <strong>prospectos en <span class="acc">60 segundos.</span></strong>
     </h2>
-    <p class="cta-sub-text">Solo falta el mensaje correcto. Vitrini lo genera por ti — personalizado, directo, sin rodeos.</p>
-    <div class="cta-btn-wrap">
-      <a class="btn-cta-main" href="vitrini.html">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Empezar gratis ahora
+    <p class="cta-p">Sin buscar uno por uno. Sin copiar y pegar. Escribe la ciudad — Vitrini hace el resto.</p>
+    <div class="cta-btns">
+      <button class="cta-btn-main" onclick="openLogin()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar negocios gratis
       </a>
-      <a class="btn-cta-google" href="vitrini.html">
-        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      <a class="cta-btn-g" href="#" onclick="handleGoogle()">
+        <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continuar con Google
       </a>
-      <div class="cta-fine">Sin tarjeta de crédito · 10 búsquedas gratis · Cancela cuando quieras</div>
+      <div class="cta-fine">10 búsquedas gratis · Sin tarjeta · Cancela cuando quieras</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Vitri<span>ni</span></div>
-  <div class="footer-links">
-    <a class="footer-link">Privacidad</a>
-    <a class="footer-link">Términos</a>
-    <a class="footer-link">Contacto</a>
-    <a class="footer-link" href="vitrini.html">App</a>
+  <div class="foot-logo">Vitri<span>ni</span></div>
+  <div class="foot-links">
+    <a class="foot-link">Privacidad</a>
+    <a class="foot-link">Términos</a>
+    <a class="foot-link">Contacto</a>
+    <a class="foot-link" href="vitrini.html">App →</a>
   </div>
-  <div class="footer-copy">© 2026 Vitrini · Todos los derechos reservados</div>
+  <div class="foot-copy">© 2026 Vitrini · Todos los derechos reservados</div>
 </footer>
+
+
+<!-- LOGIN MODAL -->
+<div class="login-backdrop" id="loginModal">
+  <div class="login-card" id="loginCard">
+    <button class="login-close" onclick="closeLogin()">✕</button>
+
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:1.6rem">
+      <div style="width:26px;height:26px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <div class="login-logo" style="margin:0">Vitri<span>ni</span></div>
+    </div>
+
+    <div class="login-title" id="loginTitle">Bienvenido<br><strong>de vuelta.</strong></div>
+    <div class="login-sub" id="loginSub">Inicia sesión para acceder a tu radar de prospectos.</div>
+
+    <!-- Google -->
+    <button class="login-google" onclick="handleGoogle()" style="font-size:0.9rem;padding:12px 16px;border-radius:11px;letter-spacing:-0.02em">
+      <svg width="19" height="19" viewBox="0 0 24 24">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continuar con Google
+    </button>
+
+    <div class="login-divider">
+      <div class="login-divider-line"></div>
+      <div class="login-divider-text">o con email</div>
+      <div class="login-divider-line"></div>
+    </div>
+
+    <!-- Form -->
+    <div class="login-form">
+      <div class="login-field">
+        <label class="login-label">Correo electrónico</label>
+        <input class="login-input" type="email" id="loginEmail" placeholder="tu@email.com" autocomplete="email">
+      </div>
+      <div class="login-field">
+        <label class="login-label">Contraseña</label>
+        <input class="login-input" type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+        <a class="login-forgot" onclick="handleForgot()">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button class="login-submit" id="loginSubmitBtn" onclick="handleLogin()" style="padding:12px;font-size:0.9rem;border-radius:11px;letter-spacing:-0.02em">
+        Iniciar sesión
+      </button>
+    </div>
+
+    <div class="login-switch" id="loginSwitchText">
+      ¿No tienes cuenta? <a onclick="switchToRegister()">Crear cuenta gratis</a>
+    </div>
+
+    <div class="login-terms">
+      Al continuar aceptas nuestros <a>Términos de uso</a> y <a>Política de privacidad</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+
+
+// ── Login modal ───────────────────────────────────────────
+let isRegisterMode = false;
+
+function openLogin() {
+  isRegisterMode = false;
+  setLoginMode();
+  document.getElementById('loginModal').classList.add('open');
+  setTimeout(() => document.getElementById('loginEmail').focus(), 200);
+}
+
+function closeLogin() {
+  document.getElementById('loginModal').classList.remove('open');
+}
+
+function closeLoginOutside(e) {
+  if (e.target === document.getElementById('loginModal')) closeLogin();
+}
+
+function setLoginMode() {
+  document.getElementById('loginTitle').innerHTML = 'Bienvenido<br><strong>de vuelta.</strong>';
+  document.getElementById('loginSub').textContent = 'Inicia sesión para acceder a tu radar de prospectos.';
+  document.getElementById('loginSubmitBtn').textContent = 'Iniciar sesión';
+  document.getElementById('loginSwitchText').innerHTML = '¿No tienes cuenta? <a onclick="switchToRegister()">Crear cuenta gratis</a>';
+  document.getElementById('loginPassword').autocomplete = 'current-password';
+}
+
+function switchToRegister() {
+  isRegisterMode = true;
+  document.getElementById('loginTitle').innerHTML = 'Crea tu<br><strong>cuenta gratis.</strong>';
+  document.getElementById('loginSub').textContent = '10 búsquedas gratis. Sin tarjeta de crédito.';
+  document.getElementById('loginSubmitBtn').textContent = 'Crear cuenta';
+  document.getElementById('loginSwitchText').innerHTML = '¿Ya tienes cuenta? <a onclick="switchToLogin()">Iniciar sesión</a>';
+  document.getElementById('loginPassword').autocomplete = 'new-password';
+  document.getElementById('loginEmail').focus();
+}
+
+function switchToLogin() {
+  isRegisterMode = false;
+  setLoginMode();
+  document.getElementById('loginEmail').focus();
+}
+
+function handleGoogle() {
+  const CLIENT_ID = '138236011304-trqsl6disq4hdpvbil5rif08urji1hht.apps.googleusercontent.com';
+  const REDIRECT_URI = 'https://mbastian549-dotcom.github.io/Vitrini/vitrini-landing.html';
+  const SCOPE = encodeURIComponent('openid email profile');
+
+  const url = 'https://accounts.google.com/o/oauth2/v2/auth' +
+    '?client_id=' + CLIENT_ID +
+    '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+    '&response_type=token' +
+    '&scope=' + SCOPE +
+    '&prompt=select_account';
+
+  // Try popup first
+  const w = 500, h = 620;
+  const left = Math.round(window.screenX + (window.outerWidth - w) / 2);
+  const top  = Math.round(window.screenY + (window.outerHeight - h) / 2);
+  const popup = window.open(url, 'vitrini-google-auth',
+    'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+    ',toolbar=no,menubar=no,resizable=no,scrollbars=yes');
+
+  if (!popup || popup.closed) {
+    // Popup blocked — redirect current page
+    window.location.href = url;
+    return;
+  }
+
+  // Poll popup for token
+  const timer = setInterval(() => {
+    try {
+      if (!popup || popup.closed) { clearInterval(timer); return; }
+      const hash = popup.location.hash;
+      if (hash && hash.includes('access_token')) {
+        clearInterval(timer);
+        popup.close();
+        const params = new URLSearchParams(hash.substring(1));
+        const token = params.get('access_token');
+        if (token) {
+          sessionStorage.setItem('vitrini_token', token);
+          closeLogin();
+          window.location.href = 'vitrini.html';
+        }
+      }
+    } catch(e) { /* cross-origin — keep polling */ }
+  }, 500);
+}
+
+function showGoogleSetupNotice() {
+  // Show a nice in-modal notice instead of an ugly alert
+  const existing = document.getElementById('googleNotice');
+  if (existing) { existing.remove(); }
+  const notice = document.createElement('div');
+  notice.id = 'googleNotice';
+  notice.style.cssText = 'background:#eff4ff;border:1px solid #dbeafe;border-radius:9px;padding:10px 13px;margin-top:10px;font-size:0.76rem;color:#1d4ed8;line-height:1.5;letter-spacing:-0.01em;font-family:Inter,sans-serif';
+  notice.innerHTML = '<strong style="display:block;margin-bottom:2px">Google OAuth no configurado aún</strong>' +
+    'Para activarlo: obtén tu Client ID en <a href="https://console.cloud.google.com" target="_blank" style="color:#2563eb">Google Cloud Console</a> y reemplaza <code style="background:#dbeafe;padding:1px 4px;border-radius:3px">YOUR_GOOGLE_CLIENT_ID</code> en el código.';
+  const form = document.querySelector('.login-form');
+  if (form) form.parentNode.insertBefore(notice, form.nextSibling);
+  setTimeout(() => { if (notice.parentNode) notice.remove(); }, 6000);
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPassword').value;
+  if (!email) { document.getElementById('loginEmail').focus(); return; }
+  if (!pass)  { document.getElementById('loginPassword').focus(); return; }
+  // Simulated — redirect to app
+  closeLogin();
+  window.location.href = 'vitrini.html';
+}
+
+function handleForgot() {
+  alert('Te enviaremos un enlace de recuperación a tu correo.
+
+(Funcionalidad próximamente)');
+}
+
+// keydown handled by delegation above
+
+// ── Unified event delegation (works on file:// and https://) ──
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Single click handler for all data-action elements
+  document.addEventListener('click', function(e) {
+    const el = e.target.closest('[data-action]');
+    if (!el) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const action = el.dataset.action;
+    const actions = {
+      openLogin:       openLogin,
+      closeLogin:      closeLogin,
+      handleGoogle:    handleGoogle,
+      handleLogin:     handleLogin,
+      handleForgot:    handleForgot,
+      switchToRegister:switchToRegister,
+      switchToLogin:   switchToLogin,
+      openPricing:     openPricing,
+    };
+    if (actions[action]) actions[action]();
+  });
+
+  // Close modal on backdrop click
+  const backdrop = document.getElementById('loginModal');
+  if (backdrop) {
+    backdrop.addEventListener('click', function(e) {
+      if (e.target === backdrop) closeLogin();
+    });
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLogin();
+    if (e.key === 'Enter') {
+      const modal = document.getElementById('loginModal');
+      if (modal && modal.classList.contains('open')) {
+        handleLogin();
+      }
+    }
+  });
+
+});
+
+</script>
 
 </body>
 </html>
