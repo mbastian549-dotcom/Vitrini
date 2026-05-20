@@ -1541,6 +1541,7 @@ body {
 .as-bar-fill { height: 100%; width: 0%; background: var(--blue); border-radius: 2px; transition: width 0.08s linear; }
 
 </style>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -2281,6 +2282,58 @@ function setUser(name, email, initial, picture) {
   if (planName) planName.textContent = 'Free';
 }
 
+
+// ── Stripe Checkout ───────────────────────────────────────
+const STRIPE_KEY = 'pk_test_51TZJVrGi4FNiv70THlYAXmJCqQUGajWo2fghyXLBpx3AwcE1R2L2QZQqwf0WzZC2r0xT8DgBm89rQcClQLg8jYcZ00naSV8jfb';
+const PRICES = {
+  pro:   'price_1TZJckGi4FNiv70ThCmCUGpc',
+  ultra: 'price_1TZJdIGi4FNiv70TnQH9ZYO0'
+};
+
+function selectPlan(plan) {
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+
+  const stripe = Stripe(STRIPE_KEY);
+  const priceId = PRICES[plan];
+  if (!priceId) return;
+
+  // Show loading state on button
+  const btnId = plan === 'pro' ? 'btnPro' : 'btnUltra';
+  const btn = document.getElementById(btnId);
+  const originalText = btn ? btn.textContent : '';
+  if (btn) { btn.textContent = 'Redirigiendo...'; btn.disabled = true; }
+
+  stripe.redirectToCheckout({
+    lineItems: [{ price: priceId, quantity: 1 }],
+    mode: 'subscription',
+    successUrl: 'https://mbastian549-dotcom.github.io/Vitrini/vitrini.html?plan=' + plan + '&success=1',
+    cancelUrl:  'https://mbastian549-dotcom.github.io/Vitrini/vitrini.html',
+    billingAddressCollection: 'auto',
+  }).then(result => {
+    if (result.error) {
+      alert('Error: ' + result.error.message);
+      if (btn) { btn.textContent = originalText; btn.disabled = false; }
+    }
+  });
+}
+
+// Show success message if redirected back from Stripe
+(function checkStripeReturn() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') === '1') {
+    const plan = params.get('plan') || 'pro';
+    setTimeout(() => {
+      const msg = document.createElement('div');
+      msg.style.cssText = 'position:fixed;top:70px;right:1.5rem;background:#16a34a;color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:500;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);letter-spacing:-0.01em';
+      msg.textContent = '✓ Plan ' + plan.charAt(0).toUpperCase() + plan.slice(1) + ' activado correctamente';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 5000);
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }, 500);
+  }
+})();
+
 </script>
 
 <!-- PRICING MODAL -->
@@ -2349,7 +2402,7 @@ function setUser(name, email, initial, picture) {
           <span class="price-period" id="proPeriod">USD /mes</span>
         </div>
         <div class="plan-tagline">Para freelancers que quieren escalar sus ventas</div>
-        <button class="plan-cta cta-pro" onclick="selectPlan('pro')">Cambiar a Pro</button>
+        <button class="plan-cta cta-pro" id="btnPro" onclick="selectPlan('pro')">Cambiar a Pro</button>
         <div class="plan-divider" style="background:#2a3f7a"></div>
         <div class="plan-features">
           <div class="feat-item highlight">
@@ -2395,7 +2448,7 @@ function setUser(name, email, initial, picture) {
           <span class="price-period" id="ultraPeriod">USD /mes</span>
         </div>
         <div class="plan-tagline">Para agencias y vendedores de alto volumen</div>
-        <button class="plan-cta cta-ultra" onclick="selectPlan('ultra')">Cambiar a Ultra</button>
+        <button class="plan-cta cta-ultra" id="btnUltra" onclick="selectPlan('ultra')">Cambiar a Ultra</button>
         <div class="plan-divider" style="background:#3b1f6e"></div>
         <div class="plan-features">
           <div class="feat-item highlight">
