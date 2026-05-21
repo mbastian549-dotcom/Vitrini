@@ -1070,6 +1070,10 @@ footer {
 
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _supa = supabase.createClient('https://fxvyzolwsmkiwcayylay.supabase.co', 'sb_publishable_zxumIx6nJKxtlsZdGlIVJQ_GqKfMR5y');
+</script>
 </head>
 <body>
 
@@ -1407,9 +1411,9 @@ footer {
 <footer>
   <div class="foot-logo">Vitri<span>ni</span></div>
   <div class="foot-links">
-    <a class="foot-link">Privacidad</a>
-    <a class="foot-link">Términos</a>
-    <a class="foot-link">Contacto</a>
+    <a class="foot-link" href="privacidad.html">Privacidad</a>
+    <a class="foot-link" href="terminos.html">Términos</a>
+    <a class="foot-link" href="contacto.html">Contacto</a>
     <a class="foot-link" href="vitrini.html">App →</a>
   </div>
   <div class="foot-copy">© 2026 Vitrini · Todos los derechos reservados</div>
@@ -1469,7 +1473,7 @@ footer {
     </div>
 
     <div class="login-terms">
-      Al continuar aceptas nuestros <a>Términos de uso</a> y <a>Política de privacidad</a>
+      Al continuar aceptas nuestros <a href="terminos.html" target="_blank">Términos de uso</a> y <a href="privacidad.html" target="_blank">Política de privacidad</a>
     </div>
   </div>
 </div>
@@ -1521,34 +1525,53 @@ function switchToLogin() {
   document.getElementById('loginEmail').focus();
 }
 
-function handleGoogle() {
-  const CLIENT_ID = '138236011304-trqsl6disq4hdpvbil5rif08urji1hht.apps.googleusercontent.com';
-  const REDIRECT_URI = 'https://mbastian549-dotcom.github.io/Vitrini/vitrini-landing.html';
-  const SCOPE = encodeURIComponent('openid email profile');
-
-  const url = 'https://accounts.google.com/o/oauth2/v2/auth' +
-    '?client_id=' + CLIENT_ID +
-    '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
-    '&response_type=token' +
-    '&scope=' + SCOPE +
-    '&prompt=select_account';
-
-  // Redirect directly — no popup (popup gets blocked by browsers)
-  window.location.href = url;
+async function handleGoogle() {
+  const { error } = await _supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://mbastian549-dotcom.github.io/Vitrini/vitrini.html'
+    }
+  });
+  if (error) alert('Error al iniciar sesión: ' + error.message);
 }
 
-// Handle OAuth token on page load (after Google redirects back)
-(function checkOAuthToken() {
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.substring(1));
-    const token = params.get('access_token');
-    if (token) {
-      sessionStorage.setItem('vitrini_token', token);
-      window.location.href = 'vitrini.html';
-    }
+// Handle email login
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPassword').value;
+  if (!email) { document.getElementById('loginEmail').focus(); return; }
+  if (!pass)  { document.getElementById('loginPassword').focus(); return; }
+
+  const btn = document.getElementById('loginSubmitBtn');
+  btn.textContent = 'Iniciando sesión...';
+  btn.disabled = true;
+
+  const { error } = isRegisterMode
+    ? await _supa.auth.signUp({ email, password: pass })
+    : await _supa.auth.signInWithPassword({ email, password: pass });
+
+  if (error) {
+    btn.textContent = isRegisterMode ? 'Crear cuenta' : 'Iniciar sesión';
+    btn.disabled = false;
+    const errDiv = document.getElementById('loginError') || (() => {
+      const d = document.createElement('div');
+      d.id = 'loginError';
+      d.style.cssText = 'color:#dc2626;font-size:0.75rem;text-align:center;margin-top:6px;font-family:Inter,sans-serif';
+      document.querySelector('.login-form').appendChild(d);
+      return d;
+    })();
+    errDiv.textContent = error.message.includes('Invalid') ? 'Email o contraseña incorrectos' : error.message;
+    return;
   }
-})();
+
+  closeLogin();
+  window.location.href = 'vitrini.html';
+}
+
+// Check if already logged in on page load
+_supa.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = 'vitrini.html';
+});
 
 function showGoogleSetupNotice() {
   // Show a nice in-modal notice instead of an ugly alert
@@ -1564,15 +1587,7 @@ function showGoogleSetupNotice() {
   setTimeout(() => { if (notice.parentNode) notice.remove(); }, 6000);
 }
 
-function handleLogin() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const pass  = document.getElementById('loginPassword').value;
-  if (!email) { document.getElementById('loginEmail').focus(); return; }
-  if (!pass)  { document.getElementById('loginPassword').focus(); return; }
-  // Simulated — redirect to app
-  closeLogin();
-  window.location.href = 'vitrini.html';
-}
+// handleLogin is now async above
 
 function handleForgot() {
   alert('Te enviaremos un enlace de recuperación a tu correo.\n\n(Funcionalidad próximamente)');

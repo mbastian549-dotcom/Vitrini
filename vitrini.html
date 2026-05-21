@@ -1541,6 +1541,10 @@ body {
 .as-bar-fill { height: 100%; width: 0%; background: var(--blue); border-radius: 2px; transition: width 0.08s linear; }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const _supa = supabase.createClient('https://fxvyzolwsmkiwcayylay.supabase.co', 'sb_publishable_zxumIx6nJKxtlsZdGlIVJQ_GqKfMR5y');
+</script>
 </head>
 <body>
 
@@ -1642,7 +1646,7 @@ body {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span>Español</span>
       </button>
-      <button class="top-btn" onclick="tip('ayuda')">
+      <button class="top-btn" onclick="window.open('contacto.html')">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span>Ayuda</span>
       </button>
@@ -1650,7 +1654,7 @@ body {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         <span>Mejorar plan</span>
       </button>
-      <button class="top-btn" onclick="tip('regalo')">
+      <button class="top-btn" onclick="alert('Próximamente — podrás regalar un mes de Pro a un colega 🎁')">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
         <span>Regalar</span>
       </button>
@@ -1680,7 +1684,7 @@ body {
             Más información
           </div>
           <div class="dd-sep"></div>
-          <div class="dd-item danger">
+          <div class="dd-item danger" onclick="signOut()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Cerrar sesión
           </div>
@@ -2225,32 +2229,67 @@ if (document.readyState === 'loading') {
 }
 
 
-// ── Load user from Google OAuth token ─────────────────────
-(function loadUser() {
-  // Check token from sessionStorage (set by landing page after OAuth)
-  const token = sessionStorage.getItem('vitrini_token');
-  if (!token) {
-    // No token — show default, redirect to landing if needed
-    setUser('Usuario', '', 'U');
+// ── Auth with Supabase ────────────────────────────────────
+(async function initAuth() {
+  const { data: { session } } = await _supa.auth.getSession();
+
+  if (!session) {
+    // Not logged in — redirect to landing
+    window.location.href = 'vitrini-landing.html';
     return;
   }
 
-  // Fetch user info from Google
-  fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-    headers: { 'Authorization': 'Bearer ' + token }
-  })
-  .then(r => r.json())
-  .then(data => {
-    const name    = data.name || data.given_name || 'Usuario';
-    const email   = data.email || '';
-    const picture = data.picture || '';
-    const initial = name.charAt(0).toUpperCase();
-    setUser(name, email, initial, picture);
-  })
-  .catch(() => {
-    setUser('Usuario', '', 'U');
-  });
+  const user = session.user;
+  const meta = user.user_metadata || {};
+  const name    = meta.full_name || meta.name || user.email.split('@')[0];
+  const email   = user.email || '';
+  const picture = meta.avatar_url || meta.picture || '';
+  const initial = name.charAt(0).toUpperCase();
+
+  setUser(name, email, initial, picture);
+
+  // Store plan in localStorage (default: free)
+  if (!localStorage.getItem('vitrini_plan')) {
+    localStorage.setItem('vitrini_plan', 'free');
+    localStorage.setItem('vitrini_searches', '0');
+  }
+
+  updatePlanUI();
 })();
+
+function updatePlanUI() {
+  const plan      = localStorage.getItem('vitrini_plan') || 'free';
+  const searches  = parseInt(localStorage.getItem('vitrini_searches') || '0');
+  const limits    = { free: 10, pro: 100, ultra: 500 };
+  const limit     = limits[plan] || 10;
+
+  const planName  = document.querySelector('.plan-name');
+  const planUsage = document.querySelector('.plan-usage');
+  const planBar   = document.querySelector('.plan-bar');
+
+  if (planName)  planName.textContent  = plan.charAt(0).toUpperCase() + plan.slice(1);
+  if (planUsage) planUsage.textContent = searches + ' / ' + limit + ' búsquedas este mes';
+  if (planBar)   planBar.style.width   = Math.min((searches / limit) * 100, 100) + '%';
+}
+
+function checkSearchLimit() {
+  const plan     = localStorage.getItem('vitrini_plan') || 'free';
+  const searches = parseInt(localStorage.getItem('vitrini_searches') || '0');
+  const limits   = { free: 10, pro: 100, ultra: 500 };
+  const limit    = limits[plan] || 10;
+
+  if (searches >= limit) {
+    openPricing();
+    return false;
+  }
+  return true;
+}
+
+function incrementSearch() {
+  const searches = parseInt(localStorage.getItem('vitrini_searches') || '0');
+  localStorage.setItem('vitrini_searches', searches + 1);
+  updatePlanUI();
+}
 
 function setUser(name, email, initial, picture) {
   // Avatar
@@ -2308,6 +2347,15 @@ function selectPlan(plan) {
     }, 500);
   }
 })();
+
+
+async function signOut() {
+  document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+  await _supa.auth.signOut();
+  localStorage.removeItem('vitrini_plan');
+  localStorage.removeItem('vitrini_searches');
+  window.location.href = 'vitrini-landing.html';
+}
 
 </script>
 
