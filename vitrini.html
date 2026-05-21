@@ -1541,7 +1541,6 @@ body {
 .as-bar-fill { height: 100%; width: 0%; background: var(--blue); border-radius: 2px; transition: width 0.08s linear; }
 
 </style>
-<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -2284,37 +2283,13 @@ function setUser(name, email, initial, picture) {
 
 
 // ── Stripe Checkout ───────────────────────────────────────
-const STRIPE_KEY = 'pk_test_51TZJVrGi4FNiv70THlYAXmJCqQUGajWo2fghyXLBpx3AwcE1R2L2QZQqwf0WzZC2r0xT8DgBm89rQcClQLg8jYcZ00naSV8jfb';
-const PRICES = {
-  pro:   'price_1TZJckGi4FNiv70ThCmCUGpc',
-  ultra: 'price_1TZJdIGi4FNiv70TnQH9ZYO0'
-};
-
 function selectPlan(plan) {
   document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-
-  const stripe = Stripe(STRIPE_KEY);
-  const priceId = PRICES[plan];
-  if (!priceId) return;
-
-  // Show loading state on button
-  const btnId = plan === 'pro' ? 'btnPro' : 'btnUltra';
-  const btn = document.getElementById(btnId);
-  const originalText = btn ? btn.textContent : '';
-  if (btn) { btn.textContent = 'Redirigiendo...'; btn.disabled = true; }
-
-  stripe.redirectToCheckout({
-    lineItems: [{ price: priceId, quantity: 1 }],
-    mode: 'subscription',
-    successUrl: 'https://mbastian549-dotcom.github.io/Vitrini/vitrini.html?plan=' + plan + '&success=1',
-    cancelUrl:  'https://mbastian549-dotcom.github.io/Vitrini/vitrini.html',
-    billingAddressCollection: 'auto',
-  }).then(result => {
-    if (result.error) {
-      alert('Error: ' + result.error.message);
-      if (btn) { btn.textContent = originalText; btn.disabled = false; }
-    }
-  });
+  const links = {
+    pro:   'https://buy.stripe.com/test_aFa4gz85BfHW3aC2Quak000',
+    ultra: 'https://buy.stripe.com/test_3cI14ndpVgM026y9eSak001'
+  };
+  if (links[plan]) window.open(links[plan], '_blank');
 }
 
 // Show success message if redirected back from Stripe
