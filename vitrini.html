@@ -2231,16 +2231,24 @@ if (document.readyState === 'loading') {
 
 // ── Auth with Supabase ────────────────────────────────────
 (async function initAuth() {
+  // Always refresh session to get latest user data
   const { data: { session } } = await _supa.auth.getSession();
 
   if (!session) {
-    // Not logged in — redirect to landing
     window.location.href = 'vitrini-landing.html';
     return;
   }
 
-  const user = session.user;
-  const meta = user.user_metadata || {};
+  // Force refresh user from Supabase to get current account data
+  const { data: { user }, error } = await _supa.auth.getUser();
+
+  if (error || !user) {
+    await _supa.auth.signOut();
+    window.location.href = 'vitrini-landing.html';
+    return;
+  }
+
+  const meta    = user.user_metadata || {};
   const name    = meta.full_name || meta.name || user.email.split('@')[0];
   const email   = user.email || '';
   const picture = meta.avatar_url || meta.picture || '';
