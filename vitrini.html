@@ -2248,18 +2248,24 @@ if (document.readyState === 'loading') {
 
   setUser(name, email, initial, picture);
 
-  // Store plan in localStorage (default: free)
-  if (!localStorage.getItem('vitrini_plan')) {
-    localStorage.setItem('vitrini_plan', 'free');
-    localStorage.setItem('vitrini_searches', '0');
+  // Store plan per user ID so different users don't share data
+  const userId = user.id;
+  const planKey    = 'vitrini_plan_' + userId;
+  const searchKey  = 'vitrini_searches_' + userId;
+  window._planKey    = planKey;
+  window._searchKey  = searchKey;
+
+  if (!localStorage.getItem(planKey)) {
+    localStorage.setItem(planKey, 'free');
+    localStorage.setItem(searchKey, '0');
   }
 
   updatePlanUI();
 })();
 
 function updatePlanUI() {
-  const plan      = localStorage.getItem('vitrini_plan') || 'free';
-  const searches  = parseInt(localStorage.getItem('vitrini_searches') || '0');
+  const plan      = localStorage.getItem(window._planKey || 'vitrini_plan') || 'free';
+  const searches  = parseInt(localStorage.getItem(window._searchKey || 'vitrini_searches') || '0');
   const limits    = { free: 10, pro: 100, ultra: 500 };
   const limit     = limits[plan] || 10;
 
@@ -2273,8 +2279,8 @@ function updatePlanUI() {
 }
 
 function checkSearchLimit() {
-  const plan     = localStorage.getItem('vitrini_plan') || 'free';
-  const searches = parseInt(localStorage.getItem('vitrini_searches') || '0');
+  const plan     = localStorage.getItem(window._planKey || 'vitrini_plan') || 'free';
+  const searches = parseInt(localStorage.getItem(window._searchKey || 'vitrini_searches') || '0');
   const limits   = { free: 10, pro: 100, ultra: 500 };
   const limit    = limits[plan] || 10;
 
@@ -2286,38 +2292,36 @@ function checkSearchLimit() {
 }
 
 function incrementSearch() {
-  const searches = parseInt(localStorage.getItem('vitrini_searches') || '0');
-  localStorage.setItem('vitrini_searches', searches + 1);
+  const searches = parseInt(localStorage.getItem(window._searchKey || 'vitrini_searches') || '0');
+  localStorage.setItem(window._searchKey || 'vitrini_searches', searches + 1);
   updatePlanUI();
 }
 
 function setUser(name, email, initial, picture) {
-  // Avatar
+  // Avatar — show Google profile photo or initial
   const avatar = document.getElementById('userAvatar');
   if (avatar) {
     if (picture) {
-      avatar.innerHTML = '<img src="' + picture + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
+      avatar.innerHTML = '<img src="' + picture + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover" referrerpolicy="no-referrer">';
+      avatar.style.background = 'transparent';
     } else {
       avatar.textContent = initial;
+      avatar.style.background = '';
     }
   }
 
-  // Dropdown
+  // Dropdown name + email
   const nameEl  = document.getElementById('ddUserName');
   const emailEl = document.getElementById('ddUserEmail');
-  if (nameEl)  nameEl.textContent  = name;
-  if (emailEl) emailEl.textContent = email;
+  if (nameEl)  nameEl.textContent  = name || 'Usuario';
+  if (emailEl) emailEl.textContent = email || '';
 
-  // Greeting
+  // Home greeting with first name
   const greeting = document.getElementById('homeTitle');
   if (greeting && name && name !== 'Usuario') {
     const firstName = name.split(' ')[0];
     greeting.innerHTML = 'Hola, ' + firstName + '.<br><em>¿Dónde buscamos hoy?</em>';
   }
-
-  // Sidebar recents label
-  const planName = document.querySelector('.plan-name');
-  if (planName) planName.textContent = 'Free';
 }
 
 
@@ -2351,10 +2355,13 @@ function selectPlan(plan) {
 
 async function signOut() {
   document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-  await _supa.auth.signOut();
-  localStorage.removeItem('vitrini_plan');
-  localStorage.removeItem('vitrini_searches');
-  window.location.href = 'vitrini-landing.html';
+  try {
+    await _supa.auth.signOut({ scope: 'global' });
+  } catch(e) { /* ignore */ }
+  localStorage.clear();
+  sessionStorage.clear();
+  // Force hard redirect — no cache
+  window.location.replace('vitrini-landing.html');
 }
 
 </script>
