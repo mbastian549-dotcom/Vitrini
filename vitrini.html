@@ -2249,11 +2249,13 @@ if (document.readyState === 'loading') {
   }
 
   const meta    = user.user_metadata || {};
-  const name    = meta.full_name || meta.name || user.email.split('@')[0];
+  // Use email as primary source to avoid cached metadata from other accounts
   const email   = user.email || '';
+  const name    = meta.full_name || meta.name || email.split('@')[0];
   const picture = meta.avatar_url || meta.picture || '';
-  const initial = name.charAt(0).toUpperCase();
+  const initial = (email.charAt(0) || name.charAt(0)).toUpperCase();
 
+  // Always update dropdown with current user's email
   setUser(name, email, initial, picture);
 
   // Store plan per user ID so different users don't share data
@@ -2324,12 +2326,19 @@ function setUser(name, email, initial, picture) {
   if (nameEl)  nameEl.textContent  = name || 'Usuario';
   if (emailEl) emailEl.textContent = email || '';
 
-  // Home greeting with first name
+  // Home greeting — use email username if name looks wrong
   const greeting = document.getElementById('homeTitle');
-  if (greeting && name && name !== 'Usuario') {
-    const firstName = name.split(' ')[0];
-    greeting.innerHTML = 'Hola, ' + firstName + '.<br><em>¿Dónde buscamos hoy?</em>';
+  const displayName = name && name !== 'Usuario' ? name : email.split('@')[0];
+  if (greeting && displayName) {
+    const firstName = displayName.split(' ')[0];
+    // Capitalize first letter
+    const cap = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    greeting.innerHTML = 'Hola, ' + cap + '.<br><em>¿Dónde buscamos hoy?</em>';
   }
+
+  // Also force dropdown to show correct email
+  const emailEl2 = document.getElementById('ddUserEmail');
+  if (emailEl2 && email) emailEl2.textContent = email;
 }
 
 
